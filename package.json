@@ -1,0 +1,26 @@
+{
+  "name": "node_projects",
+  "version": "1.0.0",
+  "description": "Hello Koa 2 example with async",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [
+    "koa",
+    "async"
+  ],
+  "author": "LinXiaoDao",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michaelliao/learn-javascript.git"
+  },
+  "dependencies": {
+    "koa": "2.0.0",
+    "koa-bodyparser": "3.2.0",
+    "koa-router": "7.0.0",
+    "mysql2": "^1.6.1",
+    "sequelize": "^4.41.0"
+  }
+}
