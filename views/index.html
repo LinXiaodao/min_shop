@@ -213,7 +213,7 @@
         $(document).ready(function(){
             $(".sign-up").on('click',function(){
                  $.ajax({
-                        url: 'http://127.0.0.1:8888/loginSuccess',
+                        url: 'http://127.0.0.1:8888/login',
                         type: 'POST',
                         dataType: 'json',
                         data: {
@@ -221,14 +221,37 @@
                             password: $("#password").val(),
                         },
                         success:function(result){
-                            // window.location.href = 'http://127.0.0.1:8888/views/loginSuccess.html'
+                            if(result.stutas === 0){
+                                window.location.href = 'http://127.0.0.1:8888/views/loginSucess.html'
+                            }
                         }
                     })
                     .fail(function(err) {
                         console.log("error");
                     })
                 })
-        })
+
+        $(".sign-in").on('click',function(){
+                             $.ajax({
+                        url: 'http://127.0.0.1:8888/registered',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            userName: $('#userName').val(),
+                            password: $("#password").val(),
+                        },
+                        success:function(result){
+                            if(result.stutas === 0){
+                              alert("注册成功")
+                                // window.location.href = 'http://127.0.0.1:8888/views/loginSucess.html'
+                            }
+                        }
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                    })
+                })
+       })
     </script>
 </body>
 

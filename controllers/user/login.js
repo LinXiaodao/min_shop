@@ -1,11 +1,11 @@
-const config = require('../config/config');
-var koa = require('koa');
+const config = require('../../config/config');
 const router = require('koa-router')();
-var app = new koa();
+
+
 const sequelize = config.sequelize;
 const Sequelize = config.Sequelize;
 
-// 定义查询的表和数据结构
+// 定义数据模型
 var Pet = sequelize.define('students',
  {
     id: {
@@ -13,24 +13,11 @@ var Pet = sequelize.define('students',
         primaryKey: true
     },
     name: Sequelize.STRING(100),
+    password: Sequelize.STRING(8)
 },
  {
     timestamps: false
 });
-
-
-//写入数据
-// var now = Date.now();
-// (async () => {
-//     var dog = await Pet.create({
-//     id: '4',
-//     name: '林锦坤',
-//     sex: '男',
-//     age: '25',
-//     tel: '13250245215',
-// });
-// console.log('created: ' + JSON.stringify(dog));
-// })();
 
 // 根据字段查询数据列表
 var queryFromSomewhere = async (val) =>{
@@ -44,8 +31,7 @@ var queryFromSomewhere = async (val) =>{
     for (let student of students) {
         data = JSON.stringify(student)
     }
-    console.log('查询结果:',data);
-    console.log('输出类型',data)
+    console.log("查询结果",data)
     return data;
   }catch(err){
     console.log(err);
@@ -54,23 +40,24 @@ var queryFromSomewhere = async (val) =>{
 };
 //登录请求处理
 const login = async (ctx, next) => {
-    console.log("进来了")
+    router.post('/login');
     console.log('ctx:',ctx)
     let requestBody = ctx.request.body;
     let responText = '';
+    let status = -1;
     let flag = false;
     await queryFromSomewhere(requestBody.userName).then(
         function(getUserMes) {
             try {
-                 console.log("获取用户信息：", JSON.parse(getUserMes).name)
                 if(Object.keys(getUserMes).length === 0){
                     responText = '用户不存在'
                 }else{
                     let UserMes = JSON.parse(getUserMes);
                     if (UserMes.name) {
-                        flag = requestBody.userName == UserMes.name && requestBody.password == UserMes.id;
+                        flag = requestBody.userName == UserMes.name && requestBody.password == UserMes.password;
                         if(flag){
                             responText = '登录成功';
+                            status = 0;
 
                         }else{
                             responText = '用户名或密码错误';
@@ -80,6 +67,7 @@ const login = async (ctx, next) => {
                 ctx.response.type = 'application/json';
                 ctx.response.body = {
                     code:200,
+                    stutas:status,
                     data:{
                       message: responText,
                     }

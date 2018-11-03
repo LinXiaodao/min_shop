@@ -5,8 +5,6 @@ var app = new koa();
 
 
 app.use(bodyParser());
-
-//登录校验
 //router.post('/loginSuccess',login)
 app.use(_.main)
 
